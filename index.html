@@ -25,7 +25,7 @@
 				<h1>Point of Sales</h1>
 			</header>  <!-- /Header -->			
 			<article class="content">  <!-- Content -->
-				<a href="#pageAddItemForm" id="catlink"><img src="img/CTA.jpg" alt="Call to Action" width="100%"></a>
+				<a href="#pageAddEdit" id="catlink"><img src="img/CTA.jpg" alt="Call to Action" width="100%"></a>
 				<section style="padding:10px;">
 					<div id="searchDiv"> <!-- Search -->
 						<div class="ui-bar ui-bar-a">
@@ -48,7 +48,7 @@
 		</section>	<!-- /Main page -->		
 
 
-		<section data-role="page" id="pageAddEdit">  <!-- AddEdit page -->
+		<section data-role="page" id="pageAddEdit"  data-add-back-btn="true">  <!-- AddEdit page -->
 			<header data-role="header" data-position="fixed" data-theme="a"> <!-- Header -->
 				<img border="0" src="img/logo-small.png" alt="Logo" style="float:right;display:inline"/>
 				<h1>Point of Sales</h1>
@@ -83,7 +83,7 @@
 						</li>
 						<li>
 							<div data-role="fieldcontain">
-								<label for="itemDescription">Item Description: *</label>
+								<label for="itemDescription">Item Description:</label>
 									<input type="text" name="itemDescription" id="itemDescription" class="required" />
 									<label for="itemDescription" class="hint">Ex: Brief explanation.</label>
 									<label for="itemDescription" class="error"></label>
@@ -109,13 +109,13 @@
 		</section>	<!-- /AddEdit page -->		
 
 
-		<section data-role="page" id="pageInventory">  <!-- Inventory page -->
+		<section data-role="page" id="pageInventory"  data-add-back-btn="true">  <!-- Inventory page -->
 			<header data-role="header" data-position="fixed" data-theme="a"> <!-- Header -->
 				<img border="0" src="img/logo-small.png" alt="Logo" style="float:right;display:inline"/>
 				<h1>Point of Sales</h1>
 			</header>  <!-- /Header -->			
 			<article class="content">  <!-- Content -->
-				<p>Inventory page!</p>
+				<p id="pError"></p>
 			</article> <!-- /Content -->			
 			<footer data-role="footer" data-id="foo1" data-position="fixed" data-theme="a">
 				<nav data-role="navbar">
