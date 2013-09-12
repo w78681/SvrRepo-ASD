@@ -1,8 +1,8 @@
-$('#pageMain').ready(function(){
+$('#pageMain').on('pageinit', function(){
 	//code needed for home page goes here
-});	
-		
-$('#pageAddItemForm').ready(function(){
+});
+
+$('#pageAddItemForm').on('pageinit', function(){
 	var myForm = $('#addItemForm');
 	    myForm.validate({
 		invalidHandler: function(form, validator) {
@@ -56,11 +56,11 @@ $('#pageAddItemForm').ready(function(){
 	};	
 });
 
-$('#pageEditItemForm').ready(function(){
-	
+$('#pageEditItemForm').on('pageinit', function(){
+
 });	
 
-$('#pageInventory').ready(function(){
+$('#pageInventory').on('pageinit', function(){
 
 	$('#ul').listview('refresh');
 
@@ -100,46 +100,6 @@ clearLink.addEventListener("click", clearLocal);
 		makeEditItemLinks(localStorage.key(i), linksli)  //create edit and delete links for local storage items.
 		makeDeleteItemLinks(localStorage.key(i), linksli)
 	}
-});	
-
-
-var autoFillData = function(){
-	for (var n in json){
-		var id = Math.floor(Math.random()*102363265439);
-		localStorage.setItem(id, JSON.stringify(json[n]));
-	}	 
-};
-
-var storeEditData = function(keyvalue){
-	id = keyvalue;
-
-	var item		= {};
-		item.name	= ["Name: ", $('#itemName').val()];
-		item.cost	= ["Cost: ", $('#itemCost').val()];
-		item.amount	= ["Amount: ", $('#itemAmount').val()];
-		if ($('#itemDescription').val() == "A brief description of the item if needed."){
-			item.description = ["Description: ", "None"];
-		} else {
-			item.description	= ["Description: ", $('#itemDescription').val()];
-		};
-		localStorage.setItem(id, JSON.stringify(item));
-
-		alert("Data Saved!");
-		window.location.href = '#pageMain';
-};
-	
-function editMyItem(){
-	var keyvalue = localStorage.getItem(this.key);
-	var item = JSON.parse(keyvalue);
-
-	$('#itemEditName').val(item.name[1]);
-	$('#itemEditCost').val(item.cost[1]);
-	$('#itemEditAmount').val(item.amount[1]);
-	$('#itemEditDescription').val(item.description[1]);
-
-	itemEditSubmit.addEventListener("click", storeEditData);
-	return this.key;
-}
 
 function makeEditItemLinks(key, linksli){ 
 	var editItemLink = document.createElement('a');
@@ -159,6 +119,59 @@ function makeDeleteItemLinks(key, linksli){
 	deleteItemLink.innerHTML = deleteItemText
 	linksli.appendChild(deleteItemLink);
 }
+
+function editMyItem(){
+	var keyvalue = localStorage.getItem(this.key);
+	var item = JSON.parse(keyvalue);
+	localStorage.removeItem(this.key);
+	$('#itemEditName').val(item.name[1]);
+	$('#itemEditCost').val(item.cost[1]);
+	$('#itemEditAmount').val(item.amount[1]);
+	$('#itemEditDescription').val(item.description[1]);
+
+	var submitEdit = $('#itemEditSubmit');
+	submitEdit.on("click", storeEditData);
+}
+
+	var myForm = $('#addItemForm');
+	    myForm.validate({
+		invalidHandler: function(form, validator) {
+		},
+		submitHandler: function() {
+	var data = myForm.serializeArray();
+		storeEditData(data);
+		}
+	});	
+	
+	var storeEditData = function(data){
+	id = Math.floor(Math.random()*102363265439);
+
+	var item		= {};
+		item.name	= ["Name: ", $('#itemEditName').val()];
+		item.cost	= ["Cost: ", $('#itemEditCost').val()];
+		item.amount	= ["Amount: ", $('#itemEditAmount').val()];
+		if ($('#itemEditDescription').val() == "A brief description of the item if needed."){
+			item.description = ["Description: ", "None"];
+		} else {
+			item.description	= ["Description: ", $('#itemEditDescription').val()];
+		};
+		localStorage.setItem(id, JSON.stringify(item));
+
+			alert("Data Saved!");
+			window.location.reload();
+
+	};
+
+});	
+
+
+var autoFillData = function(){
+	for (var n in json){
+		var id = Math.floor(Math.random()*102363265439);
+		localStorage.setItem(id, JSON.stringify(json[n]));
+	}	 
+};
+
 
 function deleteMyItem(){
 	var asktoDelete = confirm("Are your sure you want to delete this item?");
