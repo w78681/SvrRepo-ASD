@@ -54,7 +54,6 @@ $('#pageAddItemForm').ready(function(){
 		alert("Data Saved!");
 		window.location.href = '#pageMain';
 	};	
-	
 });
 
 $('#pageEditItemForm').ready(function(){
@@ -103,16 +102,6 @@ clearLink.addEventListener("click", clearLocal);
 	}
 });	
 
-//The functions below can go inside or outside the pageinit function for the page in which it is needed.
-
-// get icon based on localstorage category field
-function getIcon(mySubLi, iconCategory){
-	var iconLi = document.createElement('li');
-	mySubLi.appendChild(iconLi);
-	var newIcon = document.createElement('img');
-	var newIconSrc = newIcon.setAttribute("src", "img/" + iconCategory + ".jpg");
-	iconLi.appendChild(newIcon);
-}
 
 var autoFillData = function(){
 	for (var n in json){
@@ -140,30 +129,19 @@ var storeEditData = function(keyvalue){
 };
 	
 function editMyItem(){
-	//grab data from item from local storage
 	var keyvalue = localStorage.getItem(this.key);
 	var item = JSON.parse(keyvalue);
 
-	//populate the form fields with current localStorage values
 	$('#itemEditName').val(item.name[1]);
 	$('#itemEditCost').val(item.cost[1]);
 	$('#itemEditAmount').val(item.amount[1]);
 	$('#itemEditDescription').val(item.description[1]);
-	
-	//remove the initial listener from input 'save item' button.
-	//submitButton.removeEventListener("click", submitData);
-	
-	//change submitButton value to Edit Item
-	//$('itemSubmit').value = "Edit Item";
-	//var editSubmitButton = $('itemSubmit');
-	
-	//save the key value established in this function as a property of the editSubmitButton
+
 	itemEditSubmit.addEventListener("click", storeEditData);
 	return this.key;
 }
 
-function makeEditItemLinks(key, linksli){ //create edit and delete nav for displayed items
-	//edit item link
+function makeEditItemLinks(key, linksli){ 
 	var editItemLink = document.createElement('a');
 	editItemLink.href = "#pageEditItemForm";
 	editItemLink.key = key;
@@ -172,7 +150,7 @@ function makeEditItemLinks(key, linksli){ //create edit and delete nav for displ
 	editItemLink.innerHTML = editItemText;
 	linksli.appendChild(editItemLink);
 }
-function makeDeleteItemLinks(key, linksli){	//delete item link
+function makeDeleteItemLinks(key, linksli){
 	var deleteItemLink = document.createElement('a');
 	deleteItemLink.href = "#";
 	deleteItemLink.key = key;
