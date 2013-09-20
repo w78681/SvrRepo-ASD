@@ -1,0 +1,5 @@
+label.error{display:none}
+
+label.hint{font-size:xx-small}
+
+label.error.ui-input-text{display:block; margin:10px 0; color:red}
