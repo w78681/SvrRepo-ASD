@@ -100,56 +100,6 @@
 			</footer><!-- /footer -->
 		</section>	<!-- /Add Item Form page -->	
 		
-
-		<section data-role="page" id="pageEditItemForm" data-add-back-btn="true">  <!-- Edit Item Form page -->
-			<header data-role="header" data-position="fixed" data-theme="a"> <!-- HeaderBar|Navigation -->
-				<img border="0" src="logo-small.png" alt="Logo" style="float:right;display:inline"/>
-				<h1>Discount Grocery</h1>
-			</header>  <!-- /HeaderBar|Navigation -->
-			
-			<article class="content-primary"> <!-- Content -->
-				<section style="padding:10px;">
-					<p id="errorMessage">* indicates required field</p>
-					<form action="" id="editItemForm">
-						<section data-role="fieldcontain">
-							<label for="itemEditName">Item Name: *</label>
-							<input type="text" name="itemEditName" id="itemEditName" value="Cheese" class="required" />
-							<label for="itemEditName" class="hint">Ex: Kraft Cheese</label>
-							<label for="itemEditName" class="error"></label>
-						</section>
-						<section data-role="fieldcontain">
-							<label for="itemEditCost">Item Cost: *</label>
-							<input type="text" name="itemEditCost" id="itemEditCost" value="3" class="required number" />
-							<label for="itemEditCost" class="hint">Ex: "3" or "3.50"</label>
-							<label for="itemEditCost" class="error"></label>
-						</section>
-						<section data-role="fieldcontain">
-							<label for="itemEditAmount">Amount: *</label>
-							<input type="range" name="itemEditAmount" id="itemEditAmount" value="1" min="1" max="100" />
-						</section>					
-						<section data-role="fieldcontain">
-							<label for="itemEditDescription">Item Description:</label>
-							<textarea name="itemEditDescription" id="itemEditDescription">A brief description of the item if needed.</textarea>
-						</section>
-						<section data-role="fieldcontain">
-							<input type="submit" id="itemEditSubmit" value="Save Item" data-theme="a" />
-						</section>
-					</form>
-				</section>					
-			</article> <!-- /Content -->
-			 
-			<footer data-role="footer" data-id="foo1" data-position="fixed" data-theme="a">
-				<nav data-role="navbar">
-					<ul>
-						<li><a href="#pageMain">Home</a></li>
-						<li><a href="#pageAddItemForm" class="ui-btn-active ui-state-persist">Add</a></li>
-						<li><a href="#pageInventory">Inventory</a></li>
-					</ul>
-				</nav><!-- /navbar -->
-			</footer><!-- /footer -->
-		</section>	<!-- /Edit Item Form page -->	
-
-		
 		<section data-role="page" id="pageInventory" data-add-back-btn="true">  <!-- Inventory page -->
 			<header data-role="header" data-position="fixed" data-theme="a"> <!-- HeaderBar|Navigation -->
 				<img border="0" src="logo-small.png" alt="Logo" style="float:right;display:inline"/>
