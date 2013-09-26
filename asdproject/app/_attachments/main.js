@@ -61,16 +61,16 @@ $(document).on('pageinit', '#pageEditItemForm', function(){
 });	
 
 $(document).on('pageinit', '#pageInventory', function(){
+	$('#clearLocal').on('click', clearLocal)
 	
-var clearLink = document.getElementById('clearLocal');
-clearLink.addEventListener("click", clearLocal);
-	
+
 	$.ajax({
 		"url": '/asdproject/_all_docs?include_docs=true',
 		"dataType": "json",
 		"success": function(data) {
 			$.each(data.rows, function(index, program){
 				var itemname = program.doc.name;
+				var itemtype = program.doc.type;
 				var itemcost = program.doc.cost;
 				var itemamount = program.doc.amount;
 				var itemdescription = program.doc.description;
@@ -80,66 +80,66 @@ clearLink.addEventListener("click", clearLocal);
 		}
 	});
 
-function makeEditItemLinks(key, linksli){ 
-	var editItemLink = document.createElement('a');
-	editItemLink.href = "#pageEditItemForm";
-	editItemLink.key = key;
-	var editItemText = "Edit ";
-	editItemLink.addEventListener("click", editMyItem);
-	editItemLink.innerHTML = editItemText;
-	linksli.appendChild(editItemLink);
-}
-function makeDeleteItemLinks(key, linksli){
-	var deleteItemLink = document.createElement('a');
-	deleteItemLink.href = "#";
-	deleteItemLink.key = key;
-	var deleteItemText = " Delete";
-	deleteItemLink.addEventListener("click", deleteMyItem);
-	deleteItemLink.innerHTML = deleteItemText
-	linksli.appendChild(deleteItemLink);
-}
-
-function editMyItem(){
-	var keyvalue = localStorage.getItem(this.key);
-	var item = JSON.parse(keyvalue);
-	localStorage.removeItem(this.key);
-	$('#itemEditName').val(item.name[1]);
-	$('#itemEditCost').val(item.cost[1]);
-	$('#itemEditAmount').val(item.amount[1]);
-	$('#itemEditDescription').val(item.description[1]);
-
-	var submitEdit = $('#itemEditSubmit');
-	submitEdit.on("click", storeEditData);
-}
-
-	var myForm = $('#addItemForm');
-	    myForm.validate({
-		invalidHandler: function(form, validator) {
-		},
-		submitHandler: function() {
-	var data = myForm.serializeArray();
-		storeEditData(data);
-		}
-	});	
+	function makeEditItemLinks(key, linksli){ 
+		var editItemLink = document.createElement('a');
+		editItemLink.href = "#pageEditItemForm";
+		editItemLink.key = key;
+		var editItemText = "Edit ";
+		editItemLink.addEventListener("click", editMyItem);
+		editItemLink.innerHTML = editItemText;
+		linksli.appendChild(editItemLink);
+	}
+	function makeDeleteItemLinks(key, linksli){
+		var deleteItemLink = document.createElement('a');
+		deleteItemLink.href = "#";
+		deleteItemLink.key = key;
+		var deleteItemText = " Delete";
+		deleteItemLink.addEventListener("click", deleteMyItem);
+		deleteItemLink.innerHTML = deleteItemText
+		linksli.appendChild(deleteItemLink);
+	}
 	
-	var storeEditData = function(data){
-	id = Math.floor(Math.random()*102363265439);
-
-	var item		= {};
-		item.name	= ["Name: ", $('#itemEditName').val()];
-		item.cost	= ["Cost: ", $('#itemEditCost').val()];
-		item.amount	= ["Amount: ", $('#itemEditAmount').val()];
-		if ($('#itemEditDescription').val() == "A brief description of the item if needed."){
-			item.description = ["Description: ", "None"];
-		} else {
-			item.description	= ["Description: ", $('#itemEditDescription').val()];
+	function editMyItem(){
+		var keyvalue = localStorage.getItem(this.key);
+		var item = JSON.parse(keyvalue);
+		localStorage.removeItem(this.key);
+		$('#itemEditName').val(item.name[1]);
+		$('#itemEditCost').val(item.cost[1]);
+		$('#itemEditAmount').val(item.amount[1]);
+		$('#itemEditDescription').val(item.description[1]);
+	
+		var submitEdit = $('#itemEditSubmit');
+		submitEdit.on("click", storeEditData);
+	}
+	
+		var myForm = $('#addItemForm');
+		    myForm.validate({
+			invalidHandler: function(form, validator) {
+			},
+			submitHandler: function() {
+		var data = myForm.serializeArray();
+			storeEditData(data);
+			}
+		});	
+		
+		var storeEditData = function(data){
+		id = Math.floor(Math.random()*102363265439);
+	
+		var item		= {};
+			item.name	= ["Name: ", $('#itemEditName').val()];
+			item.cost	= ["Cost: ", $('#itemEditCost').val()];
+			item.amount	= ["Amount: ", $('#itemEditAmount').val()];
+			if ($('#itemEditDescription').val() == "A brief description of the item if needed."){
+				item.description = ["Description: ", "None"];
+			} else {
+				item.description	= ["Description: ", $('#itemEditDescription').val()];
+			};
+			localStorage.setItem(id, JSON.stringify(item));
+	
+				alert("Data Saved!");
+				window.location.reload();
+	
 		};
-		localStorage.setItem(id, JSON.stringify(item));
-
-			alert("Data Saved!");
-			window.location.reload();
-
-	};
 
 });	
 
