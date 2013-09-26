@@ -157,48 +157,48 @@ $(document).on('pageinit', '#pageInventory', function(){
 	//	linksli.appendChild(deleteItemLink);
 	//}
 	
-	function editMyItem(){
-		var keyvalue = localStorage.getItem(this.key);
-		var item = JSON.parse(keyvalue);
-		localStorage.removeItem(this.key);
-		$('#itemEditName').val(item.name[1]);
-		$('#itemEditCost').val(item.cost[1]);
-		$('#itemEditAmount').val(item.amount[1]);
-		$('#itemEditDescription').val(item.description[1]);
-	
-		var submitEdit = $('#itemEditSubmit');
-		submitEdit.on("click", storeEditData);
-	}
-	
-		var myForm = $('#addItemForm');
-		    myForm.validate({
-			invalidHandler: function(form, validator) {
-			},
-			submitHandler: function() {
-		var data = myForm.serializeArray();
-			storeEditData(data);
-			}
-		});	
-		
-		var storeEditData = function(data){
-		id = Math.floor(Math.random()*102363265439);
-	
-		var item		= {};
-			item.name	= ["Name: ", $('#itemEditName').val()];
-			item.cost	= ["Cost: ", $('#itemEditCost').val()];
-			item.amount	= ["Amount: ", $('#itemEditAmount').val()];
-			if ($('#itemEditDescription').val() == "A brief description of the item if needed."){
-				item.description = ["Description: ", "None"];
-			} else {
-				item.description	= ["Description: ", $('#itemEditDescription').val()];
-			};
-			localStorage.setItem(id, JSON.stringify(item));
-	
-				alert("Data Saved! my edit code?");
-				console("This is from the storeEditData function.");
-				window.location.reload();
-		};
-});
+//	function editMyItem(){
+//		var keyvalue = localStorage.getItem(this.key);
+//		var item = JSON.parse(keyvalue);
+//		localStorage.removeItem(this.key);
+//		$('#itemEditName').val(item.name[1]);
+//		$('#itemEditCost').val(item.cost[1]);
+//		$('#itemEditAmount').val(item.amount[1]);
+//		$('#itemEditDescription').val(item.description[1]);
+//	
+//		var submitEdit = $('#itemEditSubmit');
+//		submitEdit.on("click", storeEditData);
+//	}
+//	
+//		var myForm = $('#addItemForm');
+//		    myForm.validate({
+//			invalidHandler: function(form, validator) {
+//			},
+//			submitHandler: function() {
+//		var data = myForm.serializeArray();
+//			storeEditData(data);
+//			}
+//		});	
+//		
+//		var storeEditData = function(data){
+//		id = Math.floor(Math.random()*102363265439);
+//	
+//		var item		= {};
+//			item.name	= ["Name: ", $('#itemEditName').val()];
+//			item.cost	= ["Cost: ", $('#itemEditCost').val()];
+//			item.amount	= ["Amount: ", $('#itemEditAmount').val()];
+//			if ($('#itemEditDescription').val() == "A brief description of the item if needed."){
+//			item.description = ["Description: ", "None"];
+//			} else {
+//				item.description	= ["Description: ", $('#itemEditDescription').val()];
+//			};
+//			localStorage.setItem(id, JSON.stringify(item));
+//	
+//				alert("Data Saved! my edit code?");
+//				console("This is from the storeEditData function.");
+//				window.location.reload();
+//		};
+
 
 var autoFillData = function(){
 
