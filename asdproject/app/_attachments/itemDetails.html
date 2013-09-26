@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!-- 		  Jeremy "Jay" Sweet              -->
+<!--  Advanced Scalable Data Infrastructures  -->
+<!-- 	   Project 4 - 25 Sept 2013           -->
+<html> 
+<!-- All head infomation goes here -->
+	<head>
+		<meta charset="utf-8" />	
+		<title>Discount Grocery: Point of Sale system</title>
+	</head>
+	<body>	
+		<section data-role="page" id="pageItemDetails" data-add-back-btn="true">  <!-- Inventory page -->
+			<header data-role="header" data-position="fixed" data-theme="a"> <!-- HeaderBar|Navigation -->
+				<img border="0" src="logo-small.png" alt="Logo" style="float:right;display:inline"/>
+				<h1>Details</h1>
+			</header>  <!-- /HeaderBar|Navigation -->
+			
+			<article class="content-primary"> <!-- Content -->
+				<section style="padding:10px;">
+					<ul id="itemDetails" data-role="listview">
+					</ul>
+				</section>					
+			</article> <!-- /Content -->
+			 
+			<footer data-role="footer" data-id="foo1" data-position="fixed" data-theme="a">
+				<nav data-role="navbar" data-iconpos="top">
+					<ul>
+						<li><a href="itemEdit.html" data-icon="gear">Edit</a></li>
+						<li><a href="#" data-icon="delete">Delete</a></li>
+					</ul>
+				</nav><!-- /navbar -->
+			</footer><!-- /footer -->
+		</section>	<!-- /Inventory page -->	
+	</body>
+</html>
