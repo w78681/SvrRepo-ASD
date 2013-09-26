@@ -1,4 +1,4 @@
-$('#pageMain').on('pageinit', function(){
+$(document).on('pageinit', '#pageMain', function(){
 	//code needed for home page goes here
 });
 
@@ -56,11 +56,11 @@ $('#pageAddItemForm').on('pageinit', function(){
 	};	
 });
 
-$('#pageEditItemForm').on('pageinit', function(){
+$(document).on('pageinit', '#pageEditItemForm', function(){
 
 });	
 
-$('#pageInventory').on('pageinit', function(){
+$(document).on('pageinit', '#pageInventory', function(){
 	
 var clearLink = document.getElementById('clearLocal');
 clearLink.addEventListener("click", clearLocal);
