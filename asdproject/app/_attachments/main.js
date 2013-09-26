@@ -14,8 +14,12 @@ $(document).on('pageinit', '#pageAddItemForm', function(){
 		} else {
 			data.description = $('#itemDescription').val();
 		};
-		$.couch.db("asdproject").saveDoc(data, function(){});
-		alert("Data has been saved.");	
+		$.couch.db("asdproject").saveDoc(data, function(){
+			success: function () {alert("Data Saved Success");},
+			error: function () {alert("Data Note Saved Error");};
+			}
+		});
+//		alert("Data has been saved.");	
 		window.location.href = '#pageMain';
 	};
 
@@ -118,6 +122,7 @@ $(document).on('pageinit', '#pageInventory', function(){
 			$.couch.db('asdproject').removeDoc(key, function(){})	
 		}	
 	});
+});
 
 	
 //	$.couch.db("asdproject").view("_views/programs", {
