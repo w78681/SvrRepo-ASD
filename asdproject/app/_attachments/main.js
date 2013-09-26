@@ -2,7 +2,7 @@ $(document).on('pageinit', '#pageMain', function(){
 	//code needed for home page goes here
 });
 
-$('#pageAddItemForm').on('pageinit', function(){
+$(document).on('pageinit', '#pageAddItemForm', function(){
 	var storeData = function(data){
 	var data		= {};
 		data.name	= $('#itemName').val();
@@ -54,7 +54,6 @@ $('#pageAddItemForm').on('pageinit', function(){
 	});	
 });
 
-
 $(document).on('pageinit', '#pageEditItemForm', function(){
 
 });
@@ -79,30 +78,65 @@ var urlVars = function() {
 $(document).on('pageinit', '#pageItemDetails', function(){
 	var program = urlVars()["programs"]
 	console.log(program);
-
 });
 	
 
 $(document).on('pageinit', '#pageInventory', function(){
 	//$('#clearLocal').on('click', clearLocal)
 	
-	$.couch.db("asdproject").view("plugin/programs", {
-		success: function(data) {
-			$('#itemList').empty();
-			$.each(data.rows, function(index, value) {
-				var item = (value.value || value.doc);
-				$('#itemList').append(
-					$('<li>').append(
-						$('<a>')
-							.attr("href", "itemDetails.html?_id=")
-							.text(itemname)
-					)
-				);
-			});
+	$.ajax({
+		"url": '/asdproject/_all_docs?include_docs=true',
+		"dataType": "json",
+		"success": function(data) {
+			$.each(data.rows, function(index, program){
+				var itemid = program.doc._id;
+				var itemname = program.doc.name;
+				var itemtype = program.doc.type;
+				var itemcost = program.doc.cost;
+				var itemamount = program.doc.amount;
+				var itemdescription = program.doc.description;
+				
+			function storeIt(){
+				localStorage.setItem("itemid", "#" + itemid);
+				localStorage.setItem("itemname", itemname);
+				localStorage.setItem("itemtype", itemtype);
+				localStorage.setItem("itemcost", itemcost);
+				localStorage.setItem("itemamount", itemamount);
+				localStorage.setItem("itemdescription", itemdescription);	
+			}
+				
+				$('#itemList').append
+					($('<li>').append
+						($('<a>')
+							.attr("id", itemid)
+							.attr("href", "itemDetails.html?_id="+itemid)
+							.text(itemname)));
+			});			
 			$('#itemList').listview('refresh');
-		}
+		}	
 	});
-});	
+	
+	var myStoredItemId = localStorage.getItem(itemid);
+	$(myStoredItemId).on('click', storeIt());
+
+	
+//	$.couch.db("asdproject").view("_views/programs", {
+//		success: function(data) {
+//			$('#itemList').empty();
+//			$.each(data.rows, function(index, value) {
+//				var item = (value.value || value.doc);
+//				$('#itemList').append(
+//					$('<li>').append(
+//						$('<a>')
+//							.attr("href", "itemDetails.html?_id=")
+//							.text(itemname)
+//					)
+//				);
+//			});
+//			$('#itemList').listview('refresh');
+//		}
+//	});
+	
 	//function makeEditItemLinks(key, linksli){ 
 	//	var editItemLink = document.createElement('a');
 	//	editItemLink.href = "#pageEditItemForm";
@@ -160,9 +194,10 @@ $(document).on('pageinit', '#pageInventory', function(){
 			localStorage.setItem(id, JSON.stringify(item));
 	
 				alert("Data Saved! my edit code?");
-				console("This isnt the save item");
+				console("This is from the storeEditData function.");
 				window.location.reload();
 		};
+});
 
 var autoFillData = function(){
 
