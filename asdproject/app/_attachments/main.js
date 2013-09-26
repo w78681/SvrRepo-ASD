@@ -96,28 +96,28 @@ $(document).on('pageinit', '#pageInventory', function(){
 				var itemamount = program.doc.amount;
 				var itemdescription = program.doc.description;
 				
-			function storeIt(){
-				localStorage.setItem("itemid", "#" + itemid);
-				localStorage.setItem("itemname", itemname);
-				localStorage.setItem("itemtype", itemtype);
-				localStorage.setItem("itemcost", itemcost);
-				localStorage.setItem("itemamount", itemamount);
-				localStorage.setItem("itemdescription", itemdescription);	
-			}
-				
 				$('#itemList').append
 					($('<li>').append
 						($('<a>')
-							.attr("id", itemid)
-							.attr("href", "itemDetails.html?_id="+itemid)
+							.attr("id", "#" + itemid)
+							.attr("href", "#")
+							.attr("data-icon", "delete")
 							.text(itemname)));
+							
+//				$(itemid).on('click', function(){
+//					var id = $(this).data('id');
+//					var rev = $(this).data('rev');
+//					var key = {}
+//					key._id = id;
+//					key._rev = rev;
+//				})
 			});			
 			$('#itemList').listview('refresh');
+			
+			
+			$.couch.db('asdproject').removeDoc(key, function(){})	
 		}	
 	});
-	
-	var myStoredItemId = localStorage.getItem(itemid);
-	$(myStoredItemId).on('click', storeIt());
 
 	
 //	$.couch.db("asdproject").view("_views/programs", {
