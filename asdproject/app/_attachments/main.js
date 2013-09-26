@@ -3,6 +3,22 @@ $(document).on('pageinit', '#pageMain', function(){
 });
 
 $('#pageAddItemForm').on('pageinit', function(){
+	var storeData = function(data){
+	var data		= {};
+		data.name	= $('#itemName').val();
+		data.type	= $('#itemType').val();
+		data.cost	= $('#itemCost').val();
+		data.amount	= $('#itemAmount').val();
+		if ($('#itemDescription').val() == "A brief description of the item if needed."){
+			data.description = "None";
+		} else {
+			data.description = $('#itemDescription').val();
+		};
+		$.couch.db("asdproject").saveDoc(data, function(){});
+		alert("Data has been saved.");	
+		window.location.href = '#pageMain';
+	};
+
 	var myForm = $('#addItemForm');
 	    myForm.validate({
 		invalidHandler: function(form, validator) {
@@ -35,30 +51,18 @@ $('#pageAddItemForm').on('pageinit', function(){
 		if ($('#itemCost').val() === "2") {
 			$('#itemCost').val("");
 		}		
-	});
-	
-	var storeData = function(data){
-	id = Math.floor(Math.random()*102363265439);
-
-	var item		= {};
-		item.name	= ["Name: ", $('#itemName').val()];
-		item.cost	= ["Cost: ", $('#itemCost').val()];
-		item.amount	= ["Amount: ", $('#itemAmount').val()];
-		if ($('#itemDescription').val() == "A brief description of the item if needed."){
-			item.description = ["Description: ", "None"];
-		} else {
-			item.description	= ["Description: ", $('#itemDescription').val()];
-		};
-		localStorage.setItem(id, JSON.stringify(item));
-
-		alert("Data Saved!");
-		window.location.href = '#pageMain';
-	};	
+	});	
 });
+
 
 $(document).on('pageinit', '#pageEditItemForm', function(){
 
-});	
+});
+	
+$(document).on('pageinit', '#pageItemDetails', function(){
+
+});
+	
 
 $(document).on('pageinit', '#pageInventory', function(){
 	$('#clearLocal').on('click', clearLocal)
@@ -74,7 +78,7 @@ $(document).on('pageinit', '#pageInventory', function(){
 				var itemcost = program.doc.cost;
 				var itemamount = program.doc.amount;
 				var itemdescription = program.doc.description;
-				$('#programlist').append($('<li>').append($('<a>').attr("href", "#").text(itemname)));
+				$('#programlist').append($('<li>').append($('<a>').attr("href", "itemDetails.html").text(itemname)));
 			});
 			$('#programlist').listview('refresh');
 		}
@@ -136,7 +140,8 @@ $(document).on('pageinit', '#pageInventory', function(){
 			};
 			localStorage.setItem(id, JSON.stringify(item));
 	
-				alert("Data Saved!");
+				alert("Data Saved! my edit code?");
+				console("This isnt the save item");
 				window.location.reload();
 	
 		};
