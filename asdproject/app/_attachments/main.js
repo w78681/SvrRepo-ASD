@@ -58,50 +58,69 @@ $('#pageAddItemForm').on('pageinit', function(){
 $(document).on('pageinit', '#pageEditItemForm', function(){
 
 });
-	
+
+var urlVars = function() {
+	var urlData = $($.mobile.activePage).data("url");
+	console.log(urlData);
+	var urlParts = urlData.split("?");
+	console.log(urlParts);
+	var urlPairs = urlParts[1].split("&");
+	console.log(urlPairs);
+	var urlValues = {};
+	for (var pair in urlPairs) {
+		var keyValue = urlPairs[pair].split("=");
+		var key = decodeURIComponent(keyValue[0]);
+		var value = decodeURIComponent(keyValue[1]);
+		urlValues[key] = value;
+	}
+	return urlValues;
+}
+
 $(document).on('pageinit', '#pageItemDetails', function(){
+	var program = urlVars()["programs"]
+	console.log(program);
 
 });
 	
 
 $(document).on('pageinit', '#pageInventory', function(){
-	$('#clearLocal').on('click', clearLocal)
+	//$('#clearLocal').on('click', clearLocal)
 	
-
-	$.ajax({
-		"url": '/asdproject/_all_docs?include_docs=true',
-		"dataType": "json",
-		"success": function(data) {
-			$.each(data.rows, function(index, program){
-				var itemname = program.doc.name;
-				var itemtype = program.doc.type;
-				var itemcost = program.doc.cost;
-				var itemamount = program.doc.amount;
-				var itemdescription = program.doc.description;
-				$('#programlist').append($('<li>').append($('<a>').attr("href", "itemDetails.html").text(itemname)));
+	$.couch.db("asdproject").view("plugin/programs", {
+		success: function(data) {
+			$('#itemList').empty();
+			$.each(data.rows, function(index, value) {
+				var item = (value.value || value.doc);
+				$('#itemList').append(
+					$('<li>').append(
+						$('<a>')
+							.attr("href", "itemDetails.html?_id=")
+							.text(itemname)
+					)
+				);
 			});
-			$('#programlist').listview('refresh');
+			$('#itemList').listview('refresh');
 		}
 	});
-
-	function makeEditItemLinks(key, linksli){ 
-		var editItemLink = document.createElement('a');
-		editItemLink.href = "#pageEditItemForm";
-		editItemLink.key = key;
-		var editItemText = "Edit ";
-		editItemLink.addEventListener("click", editMyItem);
-		editItemLink.innerHTML = editItemText;
-		linksli.appendChild(editItemLink);
-	}
-	function makeDeleteItemLinks(key, linksli){
-		var deleteItemLink = document.createElement('a');
-		deleteItemLink.href = "#";
-		deleteItemLink.key = key;
-		var deleteItemText = " Delete";
-		deleteItemLink.addEventListener("click", deleteMyItem);
-		deleteItemLink.innerHTML = deleteItemText
-		linksli.appendChild(deleteItemLink);
-	}
+});	
+	//function makeEditItemLinks(key, linksli){ 
+	//	var editItemLink = document.createElement('a');
+	//	editItemLink.href = "#pageEditItemForm";
+	//	editItemLink.key = key;
+	//	var editItemText = "Edit ";
+	//	editItemLink.addEventListener("click", editMyItem);
+	//	editItemLink.innerHTML = editItemText;
+	//	linksli.appendChild(editItemLink);
+	//}
+	//function makeDeleteItemLinks(key, linksli){
+	//	var deleteItemLink = document.createElement('a');
+	//	deleteItemLink.href = "#";
+	//	deleteItemLink.key = key;
+	//	var deleteItemText = " Delete";
+	//	deleteItemLink.addEventListener("click", deleteMyItem);
+	//	deleteItemLink.innerHTML = deleteItemText
+	//	linksli.appendChild(deleteItemLink);
+	//}
 	
 	function editMyItem(){
 		var keyvalue = localStorage.getItem(this.key);
@@ -143,11 +162,7 @@ $(document).on('pageinit', '#pageInventory', function(){
 				alert("Data Saved! my edit code?");
 				console("This isnt the save item");
 				window.location.reload();
-	
 		};
-
-});	
-
 
 var autoFillData = function(){
 
@@ -157,10 +172,13 @@ var autoFillData = function(){
 		"success": function(data) {
 			$.each(data.rows, function(index, program){
 				var itemname = program.doc.name,
+					itemid = program.doc._id,
+					itemrev = program.doc._rev,
+					itemtype = program.doc.type,
 					itemcost = program.doc.cost,
 					itemamount = program.doc.amount,
 					itemdescription = program.doc.description;
-				$('#programlist').append($('li').append($('<a>').attr("href", "#").text(itemname)));
+				$('#programlist').append($('li').append($('<a>').attr("href", "itemEdit=").text(itemname)));
 			});
 			$('#programlist').listview('refresh');
 		}
